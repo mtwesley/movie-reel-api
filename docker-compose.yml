@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "9000:9000" # Expose the application on port 9000
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/final_capstone
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres1
+      # Add other environment variables here if necessary
+    restart: on-failure
+
+  db:
+    image: postgres
+    environment:
+      POSTGRES_DB: final_capstone
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres1
+    ports:
+      - "5432:5432" # Expose PostgreSQL on port 5432
+    volumes:
+      - ./postgres-init:/docker-entrypoint-initdb.d
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+
+volumes:
+  postgres_data:
+    driver: local
