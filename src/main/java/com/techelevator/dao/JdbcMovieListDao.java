@@ -124,7 +124,7 @@ public class JdbcMovieListDao implements MovieListDao {
         String name = result.getString("list_name");
         String description = result.getString("description");
 
-        var movieList = new MovieList();
+        MovieList movieList = new MovieList();
         movieList.setListId(id);
         movieList.setListName(name);
 
